@@ -1,5 +1,6 @@
 import {
   IsNotEmpty,
+  IsOptional,
   IsPositive,
   IsString,
   IsUrl,
@@ -16,6 +17,8 @@ export class CreateProductDto {
   @IsPositive()
   price: number;
 
+  @IsPositive()
+  @IsOptional()
   discount: number;
 
   @IsUrl()
