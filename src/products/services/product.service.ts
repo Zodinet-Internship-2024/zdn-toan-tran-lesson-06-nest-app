@@ -5,16 +5,16 @@ import {
 } from '@nestjs/common';
 import { readFile, writeFile } from 'fs/promises';
 import * as path from 'path';
-import { CreateProductDto } from './dto/create-product.dto';
-import { GetProductDto } from './dto/get-product.dto';
-import { UpdateProductDto } from './dto/update-product.dto';
+import { CreateProductDto } from '../dto/create-product.dto';
+import { GetProductDto } from '../dto/get-product.dto';
+import { UpdateProductDto } from '../dto/update-product.dto';
 
 @Injectable()
 export class ProductsService {
   private readonly productsFilePath = path.join(
     __dirname,
     '..',
-    '../src/db/products.json',
+    '../../src/db/products.json',
   );
 
   private async readProductsFile(filePath: string) {

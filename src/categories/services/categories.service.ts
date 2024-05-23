@@ -3,18 +3,18 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateCategoryDto } from './dto/create-category.dto';
-import { UpdateCategoryDto } from './dto/update-category.dto';
+import { CreateCategoryDto } from '../dto/create-category.dto';
+import { UpdateCategoryDto } from '../dto/update-category.dto';
 import * as path from 'path';
 import { readFile, writeFile } from 'fs/promises';
-import { GetCategoryDto } from './dto/get-category.dto';
+import { GetCategoryDto } from '../dto/get-category.dto';
 
 @Injectable()
 export class CategoriesService {
   private readonly categoriesFilePath = path.join(
     __dirname,
     '..',
-    '../src/db/categories.json',
+    '../../src/db/categories.json',
   );
 
   private async readCategoriesFile(filePath: string) {
