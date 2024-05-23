@@ -14,21 +14,20 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async generateToken(payload: Record<string, unknown>, secret: string) {
-    return this.jwtService.signAsync(payload, { secret });
+  async generateAccessToken(payload: Record<string, unknown>) {
+    const ACCESS_TOKEN_EXPIRATION = '1h';
+    return this.jwtService.signAsync(payload, {
+      secret: process.env.ACCESS_TOKEN_SECRET,
+      expiresIn: ACCESS_TOKEN_EXPIRATION,
+    });
   }
 
-  async generateAccessAndRefreshToken(payload: Record<string, unknown>) {
-    const accessToken = await this.generateToken(
-      payload,
-      process.env.ACCESS_TOKEN_SECRET,
-    );
-    const refreshToken = await this.generateToken(
-      payload,
-      process.env.REFRESH_TOKEN_SECRET,
-    );
-
-    return { accessToken, refreshToken };
+  async generateRefreshToken(payload: Record<string, unknown>) {
+    const REFRESH_TOKEN_EXPIRATION = '7d';
+    return this.jwtService.signAsync(payload, {
+      secret: process.env.REFRESH_TOKEN_SECRET,
+      expiresIn: REFRESH_TOKEN_EXPIRATION,
+    });
   }
 
   async signIn(username: string, password: string): Promise<SignInResponseDto> {
@@ -45,8 +44,11 @@ export class AuthService {
     }
 
     const payload = { sub: user.id, username: user.username };
-    const { accessToken, refreshToken } =
-      await this.generateAccessAndRefreshToken(payload);
+
+    const [accessToken, refreshToken] = await Promise.all([
+      this.generateAccessToken(payload),
+      this.generateRefreshToken(payload),
+    ]);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: _, ...userInfo } = user;
@@ -66,8 +68,11 @@ export class AuthService {
     }
 
     const payload = { sub: createdUser.id, username: createdUser.username };
-    const { accessToken, refreshToken } =
-      await this.generateAccessAndRefreshToken(payload);
+
+    const [accessToken, refreshToken] = await Promise.all([
+      this.generateAccessToken(payload),
+      this.generateRefreshToken(payload),
+    ]);
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: _, ...userInfo } = createdUser;
@@ -78,23 +83,30 @@ export class AuthService {
     };
   }
 
-  create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+  async validateRefreshToken(
+    refreshToken: string,
+  ): Promise<Record<string, string>> {
+    try {
+      const payload = this.jwtService.verify(refreshToken, {
+        secret: process.env.REFRESH_TOKEN_SECRET,
+      });
+      return { userId: payload.sub, username: payload.username };
+    } catch (error) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
   }
 
-  findAll() {
-    return `This action returns all auth`;
-  }
+  async refreshToken(refreshToken: string) {
+    const validToken = await this.validateRefreshToken(refreshToken);
+    if (!validToken) {
+      throw new UnauthorizedException('Invalid refresh token');
+    }
 
-  findOne(id: number) {
-    return `This action returns a #${id} auth`;
-  }
+    const payload = { sub: validToken.userId, username: validToken.username };
+    const newAccessToken = await this.generateAccessToken(payload);
 
-  update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} auth`;
+    return {
+      accessToken: newAccessToken,
+    };
   }
 }
