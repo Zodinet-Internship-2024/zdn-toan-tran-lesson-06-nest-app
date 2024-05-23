@@ -1,5 +1,6 @@
 import {
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsPositive,
   IsString,
@@ -22,8 +23,10 @@ export class CreateProductDto {
   discount: number;
 
   @IsUrl()
+  @IsOptional()
   image: string;
 
   @IsNotEmpty()
+  @IsNumber()
   category: number;
 }
