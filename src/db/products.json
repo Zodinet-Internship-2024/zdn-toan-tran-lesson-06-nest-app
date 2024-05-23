@@ -1,27 +1,15 @@
 [
   {
-    "id": 1,
-    "title": "iPhone 9",
-    "description": "An apple mobile which is nothing like apple",
-    "price": 549,
-    "discount": 12.96,
-    "rating": 4.69,
-    "stock": 94,
-    "brand": "Apple",
-    "category": "smartphones",
-    "image": "https://cdn.dummyjson.com/product-images/1/thumbnail.jpg"
-  },
-  {
     "id": 2,
-    "title": "iPhone X",
+    "title": "Pants",
     "description": "SIM-Free, Model A19211 6.5-inch Super Retina HD display with OLED technology A12 Bionic chip with ...",
-    "price": 899,
+    "price": null,
     "discount": 17.94,
     "rating": 4.44,
     "stock": 34,
     "brand": "Apple",
-    "category": "smartphones",
-    "image": "https://cdn.dummyjson.com/product-images/2/thumbnail.jpg"
+    "category": 464,
+    "image": "http://placeimg.com/640/480"
   },
   {
     "id": 3,
@@ -118,18 +106,6 @@
     "brand": "HP Pavilion",
     "category": "laptops",
     "image": "https://cdn.dummyjson.com/product-images/10/thumbnail.jpeg"
-  },
-  {
-    "id": 11,
-    "title": "perfume Oil",
-    "description": "Mega Discount, Impression of Acqua Di Gio by GiorgioArmani concentrated attar perfume Oil",
-    "price": 13,
-    "discount": 8.4,
-    "rating": 4.26,
-    "stock": 65,
-    "brand": "Impression of Acqua Di Gio",
-    "category": "fragrances",
-    "image": "https://cdn.dummyjson.com/product-images/11/thumbnail.jpg"
   },
   {
     "id": 12,
@@ -392,5 +368,69 @@
     "image": "http://placeimg.com/640/480",
     "category": 761,
     "id": 34
+  },
+  {
+    "title": "Towels",
+    "price": 636.14,
+    "discount": 12,
+    "category": 134,
+    "id": 35
+  },
+  {
+    "title": "Towels",
+    "price": 355.05,
+    "discount": 12,
+    "category": "c",
+    "id": 36
+  },
+  {
+    "title": "Fish",
+    "price": 736.23,
+    "discount": 12,
+    "category": 215,
+    "id": 37
+  },
+  {
+    "title": "Shoes",
+    "description": "Regional",
+    "price": 724.11,
+    "discount": 12,
+    "image": "http://placeimg.com/640/480",
+    "category": 318,
+    "id": 38
+  },
+  {
+    "title": "Soap",
+    "description": "Future",
+    "price": 313.58,
+    "discount": 12,
+    "image": "http://placeimg.com/640/480",
+    "category": 834,
+    "id": 39
+  },
+  {
+    "title": "Soap",
+    "price": 117.52,
+    "discount": 12,
+    "image": "http://placeimg.com/640/480",
+    "category": 812,
+    "id": 40
+  },
+  {
+    "title": "Fish",
+    "description": "Customer",
+    "price": 946.28,
+    "image": "http://placeimg.com/640/480",
+    "category": 469,
+    "id": 41
+  },
+  {
+    "title": "Cheese",
+    "description": "Future",
+    "price": 497.28,
+    "discount": 12,
+    "image": "http://placeimg.com/640/480",
+    "category": 269,
+    "id": 42
   }
 ]

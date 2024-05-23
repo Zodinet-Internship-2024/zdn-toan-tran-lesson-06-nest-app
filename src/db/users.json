@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "username": "toan",
+    "password": "$2b$10$x4HbzzHs2AWx16qFAEflzuKsMgzLrjF8rTigF1bgx2UPNOT7YdXwm",
+    "roleId": 1
+  },
+  {
+    "id": 2,
+    "username": "toan1",
+    "password": "$2b$10$HAgQ8qUZBOI0vfmVkH/px.2BSpbgkZUP/seiPL9JfBD/cIACR7SHe",
+    "roleId": 1
+  },
+  {
+    "id": 3,
+    "username": "toan12",
+    "password": "$2b$10$JzdW0uRUY4ZngzW9gniIrubRpnwqG0F4szfJfN7aiV2PJMuF.wOgy",
+    "roleId": 1
+  }
+]

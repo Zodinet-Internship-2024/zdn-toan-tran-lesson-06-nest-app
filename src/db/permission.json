@@ -1,0 +1,34 @@
+[
+  {
+    "id": 1,
+    "name": "can-read-product"
+  },
+  {
+    "id": 2,
+    "name": "can-write-product"
+  },
+  {
+    "id": 3,
+    "name": "can-update-product"
+  },
+  {
+    "id": 4,
+    "name": "can-delete-product"
+  },
+  {
+    "id": 5,
+    "name": "can-read-category"
+  },
+  {
+    "id": 6,
+    "name": "can-write-category"
+  },
+  {
+    "id": 7,
+    "name": "can-update-category"
+  },
+  {
+    "id": 8,
+    "name": "can-delete-category"
+  }
+]
