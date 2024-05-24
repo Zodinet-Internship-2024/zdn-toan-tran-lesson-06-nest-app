@@ -3,11 +3,15 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
 import { readFile, writeFile } from 'fs/promises';
 import * as path from 'path';
 import { CreateProductDto } from '../dto/create-product.dto';
 import { GetProductDto } from '../dto/get-product.dto';
 import { UpdateProductDto } from '../dto/update-product.dto';
+import { CreateProductResponseDto } from '../dto/create-product-response.dto';
+import { GetProductResponseDto } from '../dto/get-product-response.dto';
+import { GetProductsResponseDto } from '../dto/get-products-response.dto';
 
 @Injectable()
 export class ProductsService {
@@ -52,7 +56,7 @@ export class ProductsService {
       const newProducts = [...products, newProduct];
       await this.writeProductsFile(this.productsFilePath, newProducts);
 
-      return newProduct;
+      return plainToInstance(CreateProductResponseDto, newProduct);
     } catch (error) {
       throw new InternalServerErrorException();
     }
@@ -61,7 +65,8 @@ export class ProductsService {
   async findAll() {
     try {
       const products = await this.readProductsFile(this.productsFilePath);
-      return products;
+
+      return plainToInstance(GetProductsResponseDto, { products });
     } catch (error) {
       throw new InternalServerErrorException(error);
     }
@@ -83,7 +88,7 @@ export class ProductsService {
         throw new NotFoundException();
       }
 
-      return findProduct;
+      return plainToInstance(GetProductResponseDto, findProduct);
     } catch (error) {
       throw new InternalServerErrorException(error);
     }
@@ -108,7 +113,7 @@ export class ProductsService {
 
       await this.writeProductsFile(this.productsFilePath, products);
 
-      return products[findIndex];
+      return plainToInstance(GetProductResponseDto, products[findIndex]);
     } catch (error) {
       throw new InternalServerErrorException();
     }
@@ -126,11 +131,11 @@ export class ProductsService {
         throw new NotFoundException();
       }
 
-      const deletedProduct = products.splice(findIndex, 1);
+      products.splice(findIndex, 1);
 
       await this.writeProductsFile(this.productsFilePath, products);
 
-      return deletedProduct;
+      return true;
     } catch (error) {
       throw new InternalServerErrorException(error);
     }

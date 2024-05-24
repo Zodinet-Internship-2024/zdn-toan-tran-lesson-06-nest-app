@@ -8,6 +8,9 @@ import { UpdateCategoryDto } from '../dto/update-category.dto';
 import * as path from 'path';
 import { readFile, writeFile } from 'fs/promises';
 import { GetCategoryDto } from '../dto/get-category.dto';
+import { plainToInstance } from 'class-transformer';
+import { GetCategoryResponseDto } from '../dto/get-category-response.dto';
+import { GetCategoriesResponseDto } from '../dto/get-categories-response.dto';
 
 @Injectable()
 export class CategoriesService {
@@ -52,7 +55,7 @@ export class CategoriesService {
       const newProducts = [...categories, newCategory];
       await this.writeProductsFile(this.categoriesFilePath, newProducts);
 
-      return newProducts;
+      return plainToInstance(GetCategoryResponseDto, newCategory);
     } catch (error) {
       throw new InternalServerErrorException();
     }
@@ -61,7 +64,7 @@ export class CategoriesService {
   async findAll() {
     try {
       const categories = await this.readCategoriesFile(this.categoriesFilePath);
-      return categories;
+      return plainToInstance(GetCategoriesResponseDto, { categories });
     } catch (error) {
       throw new InternalServerErrorException(error);
     }
@@ -83,7 +86,7 @@ export class CategoriesService {
         throw new NotFoundException();
       }
 
-      return findCategory;
+      return plainToInstance(GetCategoryResponseDto, findCategory);
     } catch (error) {
       throw new InternalServerErrorException(error);
     }
@@ -108,7 +111,7 @@ export class CategoriesService {
 
       await this.writeProductsFile(this.categoriesFilePath, categories);
 
-      return categories[findIndex];
+      return plainToInstance(GetCategoryResponseDto, categories[findIndex]);
     } catch (error) {
       throw new InternalServerErrorException();
     }
@@ -126,11 +129,11 @@ export class CategoriesService {
         throw new NotFoundException();
       }
 
-      const deletedCategory = categories.splice(findIndex, 1);
+      categories.splice(findIndex, 1);
 
       await this.writeProductsFile(this.categoriesFilePath, categories);
 
-      return deletedCategory;
+      return true;
     } catch (error) {
       throw new InternalServerErrorException(error);
     }

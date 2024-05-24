@@ -1,10 +1,9 @@
 import { ConflictException, Injectable } from '@nestjs/common';
-import { CreateUserDto } from '../dto/create-user.dto';
-import { UpdateUserDto } from '../dto/update-user.dto';
-import * as path from 'path';
-import { readFile, writeFile } from 'fs/promises';
-import { GetUserDto } from '../dto/get-user-dto';
 import * as bcrypt from 'bcrypt';
+import { readFile, writeFile } from 'fs/promises';
+import * as path from 'path';
+import { CreateUserDto } from '../dto/create-user.dto';
+import { GetUserDto } from '../dto/get-user-dto';
 
 @Injectable()
 export class UserService {
@@ -49,7 +48,6 @@ export class UserService {
       throw new ConflictException('Username already exists');
     }
 
-    console.log(process.env.HASH_SALT);
     const salt = Number(process.env.HASH_SALT) || 10;
     const newId = this.generateId(users);
     const hashedPassword = await bcrypt.hash(createUserDto.password, salt);
@@ -67,19 +65,8 @@ export class UserService {
     return newUser;
   }
 
-  findAll() {
-    return `This action returns all user`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
-
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async findOne(id: number) {
+    const users = await this.readUsersFile(this.userFilePath);
+    return users.find((user) => user.id === id);
   }
 }

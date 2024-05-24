@@ -1,11 +1,12 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { CreateAuthDto } from '../dto/create-auth.dto';
-import { UpdateAuthDto } from '../dto/update-auth.dto';
-import { UserService } from 'src/user/services/user.service';
-import { SignInResponseDto } from '../dto/sign-in-response.dto';
 import { JwtService } from '@nestjs/jwt';
-import { SignUpResponseDto } from '../dto/sign-up-response.dto';
 import * as bcrypt from 'bcrypt';
+import { UserService } from 'src/user/services/user.service';
+import { CreateAuthDto } from '../dto/create-auth.dto';
+import { SignInResponseDto } from '../dto/sign-in-response.dto';
+import { SignUpResponseDto } from '../dto/sign-up-response.dto';
+import { plainToInstance } from 'class-transformer';
+import { RefreshTokenResponseDto } from '../dto/refresh-token-response.dto';
 
 @Injectable()
 export class AuthService {
@@ -30,7 +31,7 @@ export class AuthService {
     });
   }
 
-  async signIn(username: string, password: string): Promise<SignInResponseDto> {
+  async signIn(username: string, password: string) {
     const user = await this.userService.findByUsername(username);
 
     if (!user) {
@@ -50,13 +51,11 @@ export class AuthService {
       this.generateRefreshToken(payload),
     ]);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password: _, ...userInfo } = user;
-    return {
-      ...userInfo,
+    return plainToInstance(SignInResponseDto, {
+      ...user,
       accessToken,
       refreshToken,
-    };
+    });
   }
 
   async signUp(createAuthDto: CreateAuthDto): Promise<SignUpResponseDto> {
@@ -74,13 +73,11 @@ export class AuthService {
       this.generateRefreshToken(payload),
     ]);
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password: _, ...userInfo } = createdUser;
-    return {
-      ...userInfo,
+    return plainToInstance(SignUpResponseDto, {
+      ...createdUser,
       accessToken,
       refreshToken,
-    };
+    });
   }
 
   async validateRefreshToken(
@@ -104,9 +101,11 @@ export class AuthService {
 
     const payload = { sub: validToken.userId, username: validToken.username };
     const newAccessToken = await this.generateAccessToken(payload);
+    const newRefreshToken = await this.generateRefreshToken(payload);
 
-    return {
+    return plainToInstance(RefreshTokenResponseDto, {
       accessToken: newAccessToken,
-    };
+      refreshToken: newRefreshToken,
+    });
   }
 }
