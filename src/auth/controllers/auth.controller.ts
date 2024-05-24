@@ -1,5 +1,5 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
-import { ApiCookieAuth, ApiResponse } from '@nestjs/swagger';
+import { ApiCookieAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateAuthDto } from '../dto/create-auth.dto';
 import { RefreshTokenDto } from '../dto/refresh-token.dto';
 import { SignInDto } from '../dto/sign-in.dto';
@@ -8,6 +8,7 @@ import { SignInResponseDto } from '../dto/sign-in-response.dto';
 import { SignUpResponseDto } from '../dto/sign-up-response.dto';
 import { RefreshTokenResponseDto } from '../dto/refresh-token-response.dto';
 
+@ApiTags('auth')
 @ApiCookieAuth()
 @Controller('api/auth')
 export class AuthController {

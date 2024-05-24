@@ -16,5 +16,29 @@
     "username": "toan12",
     "password": "$2b$10$JzdW0uRUY4ZngzW9gniIrubRpnwqG0F4szfJfN7aiV2PJMuF.wOgy",
     "roleId": 1
+  },
+  {
+    "id": 4,
+    "username": "mtoan12",
+    "password": "$2b$10$Mfptbk0l3n0HL4b63eahDeC1fceiKEXjBHRjQsJXe5cSsxltws6mS",
+    "roleId": 1
+  },
+  {
+    "id": 5,
+    "username": "string",
+    "password": "$2b$10$xr0vsvIOUV6cq.3Ogc29A.rlz0OLEiiK7u.MgEQeQ7VzaCtsWiVNS",
+    "roleId": 1
+  },
+  {
+    "id": 6,
+    "username": "admin",
+    "password": "$2b$10$2Kr7P9.kIqZqQcKQ1xfHL.qRUracNUj3lVr/CEK389w8husqtYsNu",
+    "roleId": 2
+  },
+  {
+    "id": 7,
+    "username": "manager",
+    "password": "$2b$10$qESDlDv2YZh2y7KTPfYoCO3AHUYZd1rYpFnVfHFBoR/6VnEannWg6",
+    "roleId": 3
   }
 ]
