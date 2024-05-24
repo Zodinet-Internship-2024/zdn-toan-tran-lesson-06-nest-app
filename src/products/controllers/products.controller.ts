@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   UseGuards,
@@ -50,15 +51,18 @@ export class ProductsController {
   @ApiResponse({ type: GetProductResponseDto })
   @Permission(PERMISSIONS.canReadProducts)
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<GetProductResponseDto> {
-    return this.productsService.findOne(+id);
+  findOne(
+    @Param('id', new ParseIntPipe()) id: number,
+  ): Promise<GetProductResponseDto> {
+    console.log({ id, type: typeof id });
+    return this.productsService.findOne(id);
   }
 
   @ApiResponse({ type: GetProductResponseDto })
   @Permission(PERMISSIONS.canUpdateProducts)
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id', new ParseIntPipe()) id: number,
     @Body() updateProductDto: UpdateProductDto,
   ): Promise<GetProductResponseDto> {
     return this.productsService.update(+id, updateProductDto);
@@ -66,7 +70,7 @@ export class ProductsController {
 
   @Permission(PERMISSIONS.canDeleteProducts)
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id', new ParseIntPipe()) id: number) {
     return this.productsService.remove(+id);
   }
 }
