@@ -52,7 +52,6 @@ export class AuthService {
     ]);
 
     return plainToInstance(SignInResponseDto, {
-      ...user,
       accessToken,
       refreshToken,
     });
@@ -74,7 +73,6 @@ export class AuthService {
     ]);
 
     return plainToInstance(SignUpResponseDto, {
-      ...createdUser,
       accessToken,
       refreshToken,
     });

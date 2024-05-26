@@ -134,8 +134,6 @@ export class ProductsService {
       products.splice(findIndex, 1);
 
       await this.writeProductsFile(this.productsFilePath, products);
-
-      return true;
     } catch (error) {
       throw new InternalServerErrorException(error);
     }

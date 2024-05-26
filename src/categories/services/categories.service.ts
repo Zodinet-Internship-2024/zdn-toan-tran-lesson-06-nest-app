@@ -132,8 +132,6 @@ export class CategoriesService {
       categories.splice(findIndex, 1);
 
       await this.writeProductsFile(this.categoriesFilePath, categories);
-
-      return true;
     } catch (error) {
       throw new InternalServerErrorException(error);
     }
